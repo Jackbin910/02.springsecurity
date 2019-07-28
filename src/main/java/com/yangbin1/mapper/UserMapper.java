@@ -1,4 +1,4 @@
-package com.yangbin1.service;
+package com.yangbin1.mapper;
 
 import com.yangbin1.domain.Permission;
 import com.yangbin1.domain.User;
