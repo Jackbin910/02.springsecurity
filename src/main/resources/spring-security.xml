@@ -7,11 +7,33 @@
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
+    <bean id="passwordEncoder"
+          class="org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method="getInstance"/>
+
     <security:http>
-        <security:form-login/>
+        <!-- 拦截资源 -->
+        <security:intercept-url pattern="/product/list" access="hasAuthority('ROLE_LIST_PRODUCT')"/>
+        <security:intercept-url pattern="/product/add" access="hasAuthority('ROLE_ADD_PRODUCT')"/>
+        <security:intercept-url pattern="/product/update" access="hasAuthority('ROLE_UPDATE_PRODUCT')"/>
+        <security:intercept-url pattern="/product/delete" access="hasAuthority('ROLE_DELETE_PRODUCT')"/>
+
+        <security:intercept-url pattern="/userLogin" access="permitAll()"/>
+        <security:intercept-url pattern="/product/index" access="permitAll()"/>
+        <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
+
+        <security:form-login login-page="/userLogin"/>
+
+        <!--错误处理 -->
+        <security:access-denied-handler error-page="/error"/>
+        <security:csrf disabled="true"/>
     </security:http>
 
     <security:authentication-manager>
+        <security:authentication-provider user-service-ref="myUserDetailService">
 
+        </security:authentication-provider>
     </security:authentication-manager>
+
+    <bean id="myUserDetailService" class="com.yangbin1.security.MyUserDetailService"/>
+
 </beans>
