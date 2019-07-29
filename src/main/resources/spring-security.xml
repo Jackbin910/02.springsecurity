@@ -19,9 +19,14 @@
 
         <security:intercept-url pattern="/userLogin" access="permitAll()"/>
         <security:intercept-url pattern="/product/index" access="permitAll()"/>
+        <security:intercept-url pattern="/js/**" access="permitAll()"/>
         <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
 
-        <security:form-login login-page="/userLogin"/>
+        <!--<security:form-login login-page="/userLogin" authentication-failure-url="/userLogin?error=true"
+                             authentication-success-forward-url="/product/index"/>-->
+
+        <security:form-login login-page="/userLogin" authentication-failure-handler-ref="myAuthenticationFailureHandler"
+                             authentication-success-handler-ref="myAuthenticationSuccessHandler"/>
 
         <!--错误处理 -->
         <security:access-denied-handler error-page="/error"/>
@@ -35,5 +40,6 @@
     </security:authentication-manager>
 
     <bean id="myUserDetailService" class="com.yangbin1.security.MyUserDetailService"/>
-
+    <bean id="myAuthenticationSuccessHandler" class="com.yangbin1.security.MyAuthenticationSuccessHandler"/>
+    <bean id="myAuthenticationFailureHandler" class="com.yangbin1.security.MyAuthenticationFailureHandler"/>
 </beans>
