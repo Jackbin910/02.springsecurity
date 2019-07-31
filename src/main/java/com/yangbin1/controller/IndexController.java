@@ -7,12 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
     @RequestMapping("/userLogin")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @RequestMapping("/error")
-    public String error(){
+    public String error() {
         return "error";
+    }
+
+    @RequestMapping("/imageCode")
+    public String imageCode() {
+        return "imageCode";
     }
 }
