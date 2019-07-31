@@ -4,6 +4,8 @@ import com.yangbin1.mapper.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -28,5 +30,14 @@ public class UserMapperTest {
         for (Permission permission : permissions) {
             System.out.println(permission.getPermName() + "-" + permission.getPermTag());
         }
+    }
+
+    @Test
+    public void testUpdatePassword() {
+        User user = new User();
+        user.setUsername("jack");
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode("123456"));
+        userMapper.updatePassword(user);
     }
 }

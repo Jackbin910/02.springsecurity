@@ -20,4 +20,10 @@ public interface UserMapper {
      * @return
      */
     public List<Permission> findPermissionByUsername(String username);
+
+    /**
+     * 修改密码
+     * @param user
+     */
+    public void updatePassword(User user);
 }

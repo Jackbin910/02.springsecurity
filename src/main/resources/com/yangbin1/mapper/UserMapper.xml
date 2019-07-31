@@ -15,4 +15,8 @@
         on role_permission.perm_id = permission.id
         where username = #{value }
     </select>
+    
+    <update id="updatePassword" parameterType="com.yangbin1.domain.User">
+        update sys_user set password = #{password} where username = #{username}
+    </update>
 </mapper>

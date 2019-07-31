@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
     <bean id="passwordEncoder"
-          class="org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method="getInstance"/>
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <security:http>
         <!-- 拦截资源 -->
@@ -35,7 +35,8 @@
 
     <security:authentication-manager>
         <security:authentication-provider user-service-ref="myUserDetailService">
-
+            <!-- 使用加密算法对用户输入密码进行加密，然后和数据库密码进行配对-->
+            <security:password-encoder ref="passwordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
 
