@@ -23,20 +23,21 @@ public class MyUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         //根据用户名查询用户信息
         User user = userMapper.findByUsername(username);
-
-        //根据用户名查询用户所有的权限
-        List<Permission> list = userMapper.findPermissionByUsername(username);
-        //存放所有用户权限
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (Permission perm : list) {
-            GrantedAuthority authority = new SimpleGrantedAuthority(perm.getPermTag());
-            authorities.add(authority);
+        if (user != null) {
+            //根据用户名查询用户所有的权限
+            List<Permission> list = userMapper.findPermissionByUsername(username);
+            //存放所有用户权限
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            for (Permission perm : list) {
+                GrantedAuthority authority = new SimpleGrantedAuthority(perm.getPermTag());
+                authorities.add(authority);
+            }
+            //把所有权限给user
+            user.setAuthorities(authorities);
         }
-        //把所有权限给user
-        user.setAuthorities(authorities);
-
         logger.info("当前用户:" + user);
 
         return user;
