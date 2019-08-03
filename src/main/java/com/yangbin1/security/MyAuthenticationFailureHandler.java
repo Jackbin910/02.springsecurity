@@ -20,6 +20,7 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
         //返回json数据
         Map result = new HashMap();
         result.put("success", false);
+        result.put("errorMsg",exception.getMessage());
 
         String json = objectMapper.writeValueAsString(result);
         response.setContentType("text/json;charset=utf-8");

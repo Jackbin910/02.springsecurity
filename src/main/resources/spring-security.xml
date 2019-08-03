@@ -26,6 +26,9 @@
         <!--<security:form-login login-page="/userLogin" authentication-failure-url="/userLogin?error=true"
                              authentication-success-forward-url="/product/index"/>-->
 
+        <!-- 自定义Spring Security 过滤器 -->
+        <security:custom-filter ref="imageCodeAuthenticationFilter" before="FORM_LOGIN_FILTER"/>
+
         <security:form-login login-page="/userLogin" authentication-failure-handler-ref="myAuthenticationFailureHandler"
                              authentication-success-handler-ref="myAuthenticationSuccessHandler"/>
 
@@ -44,4 +47,8 @@
     <bean id="myUserDetailService" class="com.yangbin1.security.MyUserDetailService"/>
     <bean id="myAuthenticationSuccessHandler" class="com.yangbin1.security.MyAuthenticationSuccessHandler"/>
     <bean id="myAuthenticationFailureHandler" class="com.yangbin1.security.MyAuthenticationFailureHandler"/>
+
+    <bean id="imageCodeAuthenticationFilter" class="com.yangbin1.security.ImageCodeAuthenticationFilter">
+        <property name="authenticationFailureHandler" ref="myAuthenticationFailureHandler"/>
+    </bean>
 </beans>
