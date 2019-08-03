@@ -1,5 +1,6 @@
 package com.yangbin1.security;
 
+import com.mysql.jdbc.StringUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -32,7 +33,7 @@ public class ImageCodeAuthenticationFilter extends OncePerRequestFilter {
                 //系统生成的验证码
                 String key = (String) request.getSession().getAttribute("key");
 
-                if (imageCode == null) {
+                if (StringUtils.isNullOrEmpty(imageCode.trim())) {
                     throw new ImageCodeException("验证码必须输入");
                 }
 
