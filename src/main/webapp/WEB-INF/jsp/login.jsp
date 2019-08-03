@@ -31,7 +31,7 @@
                 if (data.success) {
                     window.location.href = "${pageContext.request.contextPath}/product/index"
                 } else {
-                    alert("登录失败，用户名或密码错误")
+                    alert("登录失败:" + data.errorMsg);
                 }
             }, "json");
         });
