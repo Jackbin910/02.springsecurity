@@ -35,6 +35,9 @@
         <!--错误处理 -->
         <security:access-denied-handler error-page="/error"/>
         <security:csrf disabled="true"/>
+
+        <!-- remeberme 功能 -->
+        <security:remember-me token-repository-ref="jdbcTokenRepository" token-validity-seconds="3600"/>
     </security:http>
 
     <security:authentication-manager>
@@ -50,5 +53,10 @@
 
     <bean id="imageCodeAuthenticationFilter" class="com.yangbin1.security.ImageCodeAuthenticationFilter">
         <property name="authenticationFailureHandler" ref="myAuthenticationFailureHandler"/>
+    </bean>
+
+    <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="createTableOnStartup" value="true"/>
     </bean>
 </beans>
